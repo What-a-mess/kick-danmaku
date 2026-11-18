@@ -1,0 +1,35 @@
+#kick-danmaku-overlay {
+  all: initial;
+  position: fixed;
+  display: block;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+  z-index: 100;
+  color: white;
+  direction: ltr;
+}
+
+#kick-danmaku-overlay .kick-danmaku-message {
+  position: absolute;
+  left: 100%;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  unicode-bidi: plaintext;
+  font: inherit;
+  font-weight: 700;
+  line-height: 1.35;
+  text-shadow: 0 1px 2px #000, 0 0 4px #000, 0 0 2px #000;
+}
+
+#kick-danmaku-overlay .kick-danmaku-message img {
+  display: inline-block;
+  width: 1.25em;
+  height: 1.25em;
+  object-fit: contain;
+  vertical-align: -0.24em;
+}

@@ -1,0 +1,102 @@
+.grid-row-2:has(> .z-controls > #kick-danmaku-composer) {
+  overflow: visible;
+}
+
+#kick-danmaku-composer {
+  position: relative;
+  flex: 1 1 360px;
+  min-width: 0;
+  max-width: 440px;
+  margin-inline: clamp(4px, 1vw, 16px);
+  color: #f4f5f6;
+  cursor: auto;
+}
+
+#kick-danmaku-composer > #chatroom-footer {
+  color: inherit;
+}
+
+#kick-danmaku-composer #chatroom-footer > div:has(#chat-input-wrapper) {
+  padding: 0;
+  overflow: visible;
+}
+
+/* Keep chat notices available to assistive technology without adding a row. */
+#kick-danmaku-composer #chatroom-footer > div:has(#chat-input-wrapper) > div:not(:has(#chat-input-wrapper)) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+#kick-danmaku-composer div:has(> div > #chat-input-wrapper) {
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+#kick-danmaku-composer div:has(> #chat-input-wrapper) {
+  min-width: 0;
+}
+
+#kick-danmaku-composer div:has(> div > #chat-input-wrapper) > div:has(#send-message-button) {
+  width: auto;
+}
+
+#kick-danmaku-composer div:has(> div > #chat-input-wrapper) > div:has(#send-message-button) button:not(#send-message-button) {
+  display: none;
+}
+
+#kick-danmaku-composer #chat-input-wrapper {
+  height: 30px;
+  border-width: 1px;
+  border-radius: 5px;
+  background: rgb(15 17 19 / 85%);
+}
+
+#kick-danmaku-composer #chat-input-wrapper > div:first-child:has(> button) {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  height: auto;
+  min-height: 0;
+  padding-block: 0;
+}
+
+#kick-danmaku-composer #chat-input-wrapper > div:has(> [contenteditable]) {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+#kick-danmaku-composer #chat-input-wrapper [contenteditable] {
+  min-height: 0;
+  max-height: 26px;
+  overflow: auto;
+  padding-block: 3px;
+  line-height: 20px;
+  white-space: nowrap !important;
+  scrollbar-width: none;
+  cursor: text;
+}
+
+/* Add scrollable space after the last character without changing the draft. */
+#kick-danmaku-composer #chat-input-wrapper [contenteditable] > .editor-paragraph:last-child::after {
+  content: "";
+  display: inline-block;
+  width: 12px;
+}
+
+#kick-danmaku-composer #chat-input-wrapper > button,
+#kick-danmaku-composer #chat-input-wrapper > div:first-child > button,
+#kick-danmaku-composer #send-message-button {
+  min-height: 0;
+  height: 28px;
+}
+
+#kick-danmaku-composer :is(#chat-mention-panel, #chat-command-suggestion-panel,
+  #chat-emotes-picker-panel, #chat-emote-suggestion-panel, #chat-settings-panel) {
+  bottom: calc(100% + 8px);
+  transform: none;
+  translate: none;
+}

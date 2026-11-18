@@ -1,0 +1,44 @@
+:root {
+  color-scheme: dark;
+  font: 13px/1.4 system-ui, "Microsoft YaHei", sans-serif;
+  color: #f1f5f2;
+  background: #151a18;
+  accent-color: #73e99a;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; width: 340px; padding: 16px; }
+h1, p { margin: 0; }
+h1 { font-size: 19px; }
+header, .row, footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+#status, small { color: #aebdb3; }
+#status { font-size: 12px; margin-top: 3px; overflow-wrap: anywhere; }
+.switch { flex: none; display: flex; align-items: center; gap: 4px; }
+form { display: grid; gap: 10px; margin-top: 14px; }
+.preview {
+  min-height: 68px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #3a4840;
+  border-radius: 8px;
+  background: #202b25;
+}
+#preview { font-weight: 700; text-shadow: 0 1px 2px #000, 0 0 4px #000; white-space: nowrap; }
+.slider { display: grid; grid-template-columns: 64px minmax(0, 1fr) 65px; gap: 8px; align-items: center; }
+output { color: #bfccbf; text-align: right; font-variant-numeric: tabular-nums; }
+input[type="range"] { width: 100%; margin: 0; }
+input[type="color"] { width: 42px; padding: 2px; }
+.words { display: grid; gap: 5px; }
+select, textarea, button {
+  color: inherit;
+  background: #222c27;
+  border: 1px solid #49594f;
+  border-radius: 5px;
+  padding: 4px 7px;
+  font: inherit;
+}
+textarea { width: 100%; resize: vertical; }
+button { cursor: pointer; flex: none; }
+:focus-visible { outline: 2px solid #73e99a; outline-offset: 2px; }
+#save-error { color: #ffafa4; font-size: 12px; }

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kick 弹幕</title>
+  <link rel="stylesheet" href="popup.css">
+  <script src="settings.js" defer></script>
+  <script src="popup.js" defer></script>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Kick 弹幕</h1>
+      <p id="status" role="status">正在检查直播间</p>
+    </div>
+    <label class="switch"><input id="enabled" type="checkbox" role="switch"> 开启</label>
+  </header>
+
+  <form id="settings" autocomplete="off">
+    <div class="preview" aria-label="弹幕预览"><span id="preview">这是一条弹幕</span></div>
+    <div class="row">
+      <label for="font">字体</label>
+      <select id="font">
+        <option value="system">系统默认</option>
+        <option value="sans">无衬线</option>
+        <option value="serif">衬线</option>
+        <option value="mono">等宽</option>
+      </select>
+    </div>
+    <div class="row"><label for="color">文字颜色</label><input id="color" type="color"></div>
+    <div class="slider"><label for="size">字号</label><input id="size" type="range" min="14" max="48"><output for="size"></output></div>
+    <div class="slider"><label for="opacity">不透明度</label><input id="opacity" type="range" min="10" max="100"><output for="opacity"></output></div>
+    <div class="slider"><label for="speed">滚动速度</label><input id="speed" type="range" min="70" max="320"><output for="speed"></output></div>
+    <div class="slider"><label for="area">顶部覆盖</label><input id="area" type="range" min="15" max="80"><output for="area"></output></div>
+    <label class="row" for="showName">显示用户名<input id="showName" type="checkbox"></label>
+    <div class="words">
+      <label for="blocked">屏蔽词</label>
+      <textarea id="blocked" maxlength="10000" rows="3" placeholder="每行一个，也可以用逗号分隔" aria-describedby="words-help"></textarea>
+      <small id="words-help">包含任一屏蔽词的弹幕会被隐藏，英文不区分大小写。</small>
+    </div>
+    <footer><span id="save-error" role="alert"></span><button id="reset" type="button">恢复默认</button></footer>
+  </form>
+</body>
+</html>
