@@ -1,4 +1,5 @@
 (() => {
+  if (!kickDanmakuPageActive) return;
   const dock = document.createElement("div");
   dock.id = "kick-danmaku-composer";
   dock.setAttribute("role", "region");

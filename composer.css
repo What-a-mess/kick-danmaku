@@ -44,7 +44,8 @@
   width: auto;
 }
 
-#kick-danmaku-composer div:has(> div > #chat-input-wrapper) > div:has(#send-message-button) button:not(#send-message-button) {
+#kick-danmaku-composer div:has(> div > #chat-input-wrapper) > div:has(#send-message-button)
+  button:not(#send-message-button, :has([data-ds-icon="Settings"])) {
   display: none;
 }
 

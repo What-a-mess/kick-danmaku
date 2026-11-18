@@ -2,14 +2,23 @@
 
 <img src="assets/icon-128.png" width="96" height="96" alt="Kick 弹幕 Logo">
 
-Chrome / Edge 的本地扩展，把 Kick 直播间的实时聊天从右向左叠在视频上。
+适用于 Chrome / Edge 扩展和 Tampermonkey 的 Kick 实时弹幕。
 
 ## 安装
 
+### Tampermonkey 油猴脚本
+
+1. 确认浏览器已安装 Tampermonkey，然后打开 [安装 Kick 弹幕](https://raw.githubusercontent.com/What-a-mess/kick-danmaku/main/kick-danmaku.user.js)，在 Tampermonkey 安装页确认。
+2. 刷新 Kick 直播页，打开「聊天室设置 → 弹幕设置」。Tampermonkey 菜单也提供「弹幕设置」入口。
+
+### Chrome / Edge 扩展
+
 1. 打开 `chrome://extensions` 或 `edge://extensions`，开启「开发者模式」。
-2. 下载并解压本仓库，点「加载已解压的扩展程序」，选择包含 `manifest.json` 的文件夹。
+2. [下载并解压本仓库](https://github.com/What-a-mess/kick-danmaku/archive/refs/heads/main.zip)，点「加载已解压的扩展程序」，选择包含 `manifest.json` 的文件夹。
 3. 停用旧弹幕插件并刷新 Kick 直播页，避免两套弹幕同时出现。全屏时使用 Kick 播放器自己的全屏按钮。
-4. 点击浏览器工具栏里的「Kick 弹幕」，查看连接状态，调整字体、字号、颜色、不透明度、速度和覆盖范围，或设置屏蔽词。设置自动保存到当前浏览器。
+4. 打开「聊天室设置 → 弹幕设置」，或点击浏览器工具栏里的「Kick 弹幕」。可以查看连接状态，调整字体、字号、颜色、不透明度、速度和覆盖范围，或设置屏蔽词。
+
+两种版本使用独立的本地设置，建议同一个浏览器只启用其中一种。
 
 ## 行为
 
@@ -19,6 +28,10 @@ Chrome / Edge 的本地扩展，把 Kick 直播间的实时聊天从右向左叠
 - 支持普通播放和播放器容器全屏。浏览器原生画中画或仅让原始视频元素进入全屏的模式无法叠加网页元素。
 - 右侧聊天折叠或进入播放器全屏时，Kick 自带的聊天输入框会在播放控制栏内与按钮同排。输入框随播放控制栏显隐，打字时控制栏保持展开。可按 Enter 或点原有发送按钮，草稿随输入框保留。
 - 用途限于直播频道页。实时连接使用 Kick 的访客令牌，设置保存在本机；聊天内容只在当前标签页内处理。
+
+## 构建
+
+在仓库目录运行 `node build-userscript.cjs`，根据扩展源码生成 `kick-danmaku.user.js` 和内嵌面板模板。无需安装依赖。`node build-userscript.cjs --check` 可检查产物是否最新。
 
 ## Credits
 

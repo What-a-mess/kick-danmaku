@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Kick 弹幕",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "将 Kick 实时聊天显示为播放器弹幕。",
   "permissions": ["storage"],
   "icons": {
@@ -17,8 +17,11 @@
   "content_scripts": [
     {
       "matches": ["https://kick.com/*", "https://www.kick.com/*"],
-      "js": ["settings.js", "realtime.js", "overlay.js", "composer.js"],
-      "css": ["overlay.css", "composer.css"],
+      "js": [
+        "settings.js", "storage.js", "page-start.js", "realtime.js", "overlay.js", "composer.js",
+        "panel-controls.js", "panel-template.js", "chat-menu.js"
+      ],
+      "css": ["overlay.css", "composer.css", "chat-menu.css"],
       "run_at": "document_idle"
     }
   ]

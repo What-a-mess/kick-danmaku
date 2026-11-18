@@ -1,4 +1,5 @@
 (() => {
+  if (!kickDanmakuPageActive) return;
   const maxAge = 2200;
   const moderationDelay = 450;
   const layer = document.createElement("div");
@@ -227,18 +228,18 @@
     tick();
   }
 
-  chrome.storage.onChanged.addListener((changes, area) => {
-    if (area === "local" && changes.danmaku) applySettings(changes.danmaku.newValue);
-  });
-  chrome.storage.local.get("danmaku").then(({ danmaku }) => {
+  kickDanmakuStore.subscribe(applySettings);
+  kickDanmakuStore.get().then(danmaku => {
     if (!loaded) applySettings(danmaku);
   }).catch(() => {
     if (!loaded) applySettings();
   });
-  chrome.runtime.onMessage.addListener((message, sender, reply) => {
-    if (message?.type !== "kick-danmaku-status") return;
-    reply(!settings.enabled ? { state: "disabled" } : realtime ? status : { state: "idle" });
-  });
+  kickDanmakuGetStatus = () => !settings.enabled ? { state: "disabled" } : realtime ? status : { state: "idle" };
+  if (!kickDanmakuUserscript) {
+    chrome.runtime.onMessage.addListener((message, _sender, reply) => {
+      if (message?.type === "kick-danmaku-status") reply(kickDanmakuGetStatus());
+    });
+  }
   document.addEventListener("fullscreenchange", tick);
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) clearOverlay();
