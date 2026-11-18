@@ -132,9 +132,23 @@
     if (queue.length > 32) queue.shift();
   }
 
+  function isOwnMessage(username) {
+    if (!username) return false;
+    const accounts = document.querySelectorAll('nav button[aria-haspopup="menu"][aria-label]');
+    for (const button of accounts) {
+      const name = button.getAttribute("aria-label").trim().toLowerCase();
+      const avatar = button.querySelector("img[alt]")?.alt.trim().toLowerCase();
+      if (name && name === avatar) return name === username.trim().toLowerCase();
+    }
+    return false;
+  }
+
   function createMessage(message) {
     const node = document.createElement("span");
     node.className = "kick-danmaku-message";
+    if (settings.highlightOwn && isOwnMessage(message.username)) {
+      node.classList.add("kick-danmaku-own-message");
+    }
     if (settings.showName && message.username) node.append(`${message.username}: `);
     const parts = message.content.split(/\[emote:(\d+):([^\]\r\n]+)\]/g);
     node.append(parts[0]);
@@ -215,9 +229,10 @@
     blocked = kickDanmakuFilter(settings.blocked).split(/[\r\n,，]+/).map(word => word.trim()).filter(Boolean);
     layer.style.fontFamily = kickDanmakuFonts[settings.font];
     layer.style.fontSize = `${settings.size}px`;
+    layer.style.fontWeight = settings.fontWeight;
     layer.style.color = settings.color;
     layer.style.opacity = settings.opacity / 100;
-    if (["size", "speed", "font", "area", "showName"].some(key => previous[key] !== settings[key])) {
+    if (["size", "speed", "font", "fontWeight", "area", "showName", "highlightOwn"].some(key => previous[key] !== settings[key])) {
       clearActive();
     }
     if (previous.blocked !== settings.blocked) {

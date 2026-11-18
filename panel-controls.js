@@ -20,9 +20,12 @@ function kickDanmakuBindPanel(root, getStatus) {
     }
     preview.style.fontFamily = kickDanmakuFonts[settings.font];
     preview.style.fontSize = `${settings.size}px`;
+    preview.style.fontWeight = settings.fontWeight;
     preview.style.color = settings.color;
     preview.style.opacity = settings.opacity / 100;
-    preview.textContent = settings.showName ? "观众: 这是一条弹幕" : "这是一条弹幕";
+    preview.classList.toggle("own-message", settings.highlightOwn);
+    const label = settings.highlightOwn ? "自己的弹幕" : "弹幕预览";
+    preview.textContent = settings.showName ? `我: ${label}` : label;
   }
 
   function save(settings) {

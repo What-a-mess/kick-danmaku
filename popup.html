@@ -30,12 +30,23 @@
         <option value="mono">等宽</option>
       </select>
     </div>
+    <div class="row">
+      <label for="fontWeight">字重</label>
+      <select id="fontWeight">
+        <option value="400">常规</option>
+        <option value="500">中等</option>
+        <option value="600">半粗</option>
+        <option value="700">粗体</option>
+        <option value="900">特粗</option>
+      </select>
+    </div>
     <div class="row"><label for="color">文字颜色</label><input id="color" type="color"></div>
     <div class="slider"><label for="size">字号</label><input id="size" type="range" min="14" max="48"><output for="size"></output></div>
     <div class="slider"><label for="opacity">不透明度</label><input id="opacity" type="range" min="10" max="100"><output for="opacity"></output></div>
     <div class="slider"><label for="speed">滚动速度</label><input id="speed" type="range" min="70" max="320"><output for="speed"></output></div>
     <div class="slider"><label for="area">顶部覆盖</label><input id="area" type="range" min="15" max="80"><output for="area"></output></div>
     <label class="row" for="showName">显示用户名<input id="showName" type="checkbox"></label>
+    <label class="row" for="highlightOwn">描边标记自己的弹幕<input id="highlightOwn" type="checkbox"></label>
     <div class="words">
       <label for="blocked">屏蔽词</label>
       <textarea id="blocked" maxlength="10000" rows="3" placeholder="每行一个，也可以用逗号分隔" aria-describedby="words-help"></textarea>

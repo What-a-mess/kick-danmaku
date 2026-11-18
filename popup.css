@@ -24,7 +24,8 @@ form { display: grid; gap: 10px; margin-top: 14px; }
   border-radius: 8px;
   background: #202b25;
 }
-#preview { font-weight: 700; text-shadow: 0 1px 2px #000, 0 0 4px #000; white-space: nowrap; }
+#preview { text-shadow: 0 1px 2px #000, 0 0 4px #000; white-space: nowrap; }
+#preview.own-message { border: 1px solid #53fc9a; border-radius: 5px; padding-inline: 0.24em; }
 .slider { display: grid; grid-template-columns: 64px minmax(0, 1fr) 65px; gap: 8px; align-items: center; }
 output { color: #bfccbf; text-align: right; font-variant-numeric: tabular-nums; }
 input[type="range"] { width: 100%; margin: 0; }
