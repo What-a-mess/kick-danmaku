@@ -1,13 +1,17 @@
-.grid-row-2:has(> .z-controls > #kick-danmaku-composer) {
-  overflow: visible;
-}
-
-#kick-danmaku-composer {
-  position: relative;
+.kick-danmaku-composer-slot {
   flex: 1 1 360px;
   min-width: 0;
   max-width: 440px;
+  height: 30px;
   margin-inline: clamp(4px, 1vw, 16px);
+  pointer-events: none;
+}
+
+#kick-danmaku-composer {
+  position: absolute;
+  z-index: 230;
+  transform: translateY(-50%);
+  min-width: 0;
   color: #f4f5f6;
   cursor: auto;
 }

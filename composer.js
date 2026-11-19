@@ -4,12 +4,16 @@
   dock.id = "kick-danmaku-composer";
   dock.setAttribute("role", "region");
   dock.setAttribute("aria-label", "播放器聊天");
+  const slot = document.createElement("div");
+  slot.className = "kick-danmaku-composer-slot";
+  slot.setAttribute("aria-hidden", "true");
 
   let footer;
   let originalParent;
   let originalNext;
   let lastKeepAlive = 0;
   let caretFrame = 0;
+  let composingEditor;
 
   function scheduleCaretScroll() {
     const editor = document.activeElement;
@@ -49,6 +53,8 @@
       move(footer, originalParent, originalNext?.parentNode === originalParent ? originalNext : null);
     }
     dock.remove();
+    slot.remove();
+    composingEditor = undefined;
     footer = undefined;
     originalParent = undefined;
     originalNext = undefined;
@@ -60,8 +66,15 @@
     const videoWrapper = player?.parentElement;
     const useFullscreen = player && fullscreen && fullscreen !== player && fullscreen.contains(player);
     const chatCollapsed = player && !fullscreen && player.closest('[data-chat="false"]');
-    const row = (useFullscreen || chatCollapsed) && videoWrapper.querySelector(":scope > div > .grid-row-2 > .z-controls");
-    if (!row?.firstElementChild?.nextElementSibling || (useFullscreen && !fullscreen.contains(row))) {
+    if (!useFullscreen && !chatCollapsed) {
+      restore();
+      return;
+    }
+
+    const row = videoWrapper.querySelector(":scope > div > .grid-row-2 > .z-controls");
+    const hasSlot = row?.firstElementChild?.nextElementSibling && (!useFullscreen || fullscreen.contains(row));
+    const interacting = dock.contains(document.activeElement) || composingEditor;
+    if (!hasSlot && (!interacting || dock.parentNode !== videoWrapper)) {
       restore();
       return;
     }
@@ -78,13 +91,22 @@
       dock.style.setProperty("--chatroom-font-size",
         getComputedStyle(footer).getPropertyValue("--chatroom-font-size").trim() || "14px");
     }
-    if (dock.parentNode !== row) move(dock, row, row.firstElementChild.nextSibling);
+    // Kick removes its controls on inactivity. Keep the editor in the stable
+    // player wrapper; the controls only carry its layout placeholder.
+    if (dock.parentNode !== videoWrapper) move(dock, videoWrapper);
     if (footer.parentNode !== dock) move(footer, dock);
+    if (hasSlot) {
+      if (slot.parentNode !== row) move(slot, row, row.firstElementChild.nextSibling);
+      const position = slot.getBoundingClientRect();
+      const wrapper = videoWrapper.getBoundingClientRect();
+      dock.style.left = `${position.left - wrapper.left}px`;
+      dock.style.top = `${position.top + position.height / 2 - wrapper.top}px`;
+      dock.style.width = `${position.width}px`;
+    }
 
-    // Kick unmounts its controls after pointer inactivity. While the composer
-    // has focus, keep the native controls alive so typing and IME can finish.
+    // Preserve the usual behavior for typing without an active IME candidate.
     const now = performance.now();
-    if (dock.contains(document.activeElement) && now - lastKeepAlive >= 500) {
+    if (interacting && !composingEditor && now - lastKeepAlive >= 500) {
       lastKeepAlive = now;
       videoWrapper.dispatchEvent(new MouseEvent("mousemove", { bubbles: true }));
     }
@@ -92,6 +114,31 @@
 
   dock.addEventListener("focusin", scheduleCaretScroll);
   dock.addEventListener("input", scheduleCaretScroll, true);
+  dock.addEventListener("compositionstart", event => {
+    if (event.target.matches('#chat-input-wrapper [contenteditable="true"]')) composingEditor = event.target;
+  });
+  dock.addEventListener("compositionend", event => {
+    if (event.target !== composingEditor) return;
+    const editor = composingEditor;
+    queueMicrotask(() => {
+      if (editor !== composingEditor) return;
+      composingEditor = undefined;
+      if (document.fullscreenElement && document.hasFocus() && document.activeElement === document.body) {
+        editor.focus({ preventScroll: true });
+      }
+    });
+  });
+  window.addEventListener("pointerdown", event => {
+    if (!dock.contains(event.target)) composingEditor = undefined;
+  }, true);
+  function protectComposition(event) {
+    if (!document.fullscreenElement || !composingEditor || dock.contains(event.target)) return;
+    if (event.target === document.body || event.target === document.documentElement) {
+      event.stopImmediatePropagation();
+    }
+  }
+  window.addEventListener("keydown", protectComposition, true);
+  window.addEventListener("keyup", protectComposition, true);
   document.addEventListener("selectionchange", scheduleCaretScroll);
   document.addEventListener("fullscreenchange", update);
   window.navigation?.addEventListener("navigate", event => {

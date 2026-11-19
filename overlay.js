@@ -146,6 +146,7 @@
   function createMessage(message) {
     const node = document.createElement("span");
     node.className = "kick-danmaku-message";
+    node.style.fontWeight = settings.fontWeight;
     if (settings.highlightOwn && isOwnMessage(message.username)) {
       node.classList.add("kick-danmaku-own-message");
     }

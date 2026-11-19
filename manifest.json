@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Kick 弹幕",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "将 Kick 实时聊天显示为播放器弹幕。",
   "permissions": ["storage"],
   "icons": {
